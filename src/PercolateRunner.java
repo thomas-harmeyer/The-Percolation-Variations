@@ -21,7 +21,11 @@ public class PercolateRunner {
 		double t = 0;
 		t = System.nanoTime();
 		ThreadRun: for (int x = 0; x < granularity; x++) {
-			chance = (1 / (((double)x)*(1 - ((double) granularity))));
+			if (x == 0) {
+				chance = 0;
+			} else {
+				chance = (1 / (((double) x) * (((double) granularity) - 1)));
+			}
 			hits = 0;
 			GranRun: for (int y = 0; y < runs; y++) {
 				Percolate percolate = new Percolate(gridSize, x, fluidType);
@@ -31,7 +35,8 @@ public class PercolateRunner {
 			}
 
 			if ((((double) hits) / ((double) runs)) >= 0.5) {
-				System.out.println(chance);
+				System.out.println("\n\n" + chance);
+				System.out.println("Percent"+(((double) hits) / ((double) runs)));
 				P = ((double) hits) / ((double) runs);
 				break ThreadRun;
 			}
