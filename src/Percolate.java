@@ -11,13 +11,16 @@ public class Percolate {
 				this.Solve(x, 0);
 			}
 		}
-		System.out.println(Grid.toString());
+		//System.out.println(Grid.toString());
 		System.out.print("\n" + "Percolate = " + this.hitBottom());
 	}
 
 	public void Solve(int xCord, int yCord) {
 		Grid.setValue(xCord, yCord, 2);
-		if (dirtType == 0) {
+		if (yCord == Grid.getSize() - 1) {
+			hitBottom++;
+		}
+		if (dirtType == 1) {
 			if ((yCord < Grid.getSize() - 1)) {
 				if (Grid.getValue(xCord, yCord + 1) == 0) {
 					Solve(xCord, yCord + 1);
@@ -29,11 +32,8 @@ public class Percolate {
 					Solve(xCord, yCord - 1);
 				}
 			}
-			if (yCord == Grid.getSize() - 1) {
-				hitBottom++;
-			}
 		}
-		if (dirtType == 1) {
+		if (dirtType == 2) {
 			if ((yCord < Grid.getSize() - 1)) {
 				if (Grid.getValue(xCord, yCord + 1) == 0) {
 					Solve(xCord, yCord + 1);
@@ -55,11 +55,8 @@ public class Percolate {
 					Solve(xCord - 1, yCord);
 				}
 			}
-			if (yCord == Grid.getSize() - 1) {
-				hitBottom++;
-			}
 		}
-		if (dirtType == 2) {
+		if (dirtType == 3) {
 			if ((yCord < Grid.getSize() - 1)) {
 				if (Grid.getValue(xCord, yCord + 1) == 0) {
 					Solve(xCord, yCord + 1);
@@ -106,10 +103,11 @@ public class Percolate {
 	}
 
 	public boolean hitBottom() {
-		if (hitBottom > 0) {
-			return true;
-		} else {
-			return false;
+		for (int x = 0; x < Grid.getSize(); x++) {
+			if(Grid.getValue(x, Grid.getSize()-1)==2){
+				return true;
+			}
 		}
+		return false;
 	}
 }

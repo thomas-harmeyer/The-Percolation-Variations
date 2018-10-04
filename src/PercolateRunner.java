@@ -24,22 +24,24 @@ public class PercolateRunner {
 			if (x == 0) {
 				chance = 0;
 			} else {
-				chance = (1 / (((double) x) * (((double) granularity) - 1)));
+				chance = ((double) x)*(1.0 / ((((double) granularity) - 1)));
 			}
 			hits = 0;
 			GranRun: for (int y = 0; y < runs; y++) {
-				Percolate percolate = new Percolate(gridSize, x, fluidType);
+				System.out.println(chance);
+				Percolate percolate = new Percolate(gridSize, chance, fluidType);
 				if (percolate.hitBottom()) {
 					hits++;
 				}
 			}
 
-			if ((((double) hits) / ((double) runs)) >= 0.5) {
+			if ((((double) hits) / ((double) runs)) <= 0.5) {
 				System.out.println("\n\n" + chance);
 				System.out.println("Percent"+(((double) hits) / ((double) runs)));
-				P = ((double) hits) / ((double) runs);
+				P = chance;
 				break ThreadRun;
 			}
+		System.out.println("MISSED");
 		}
 		System.out.println("Percolation tipping point p = " + P);
 		t = (System.nanoTime() - t) * 1000;
